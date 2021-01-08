@@ -41,7 +41,7 @@ def detection_fasterrcnn(img_path, finetune=False):
     img = cv2.imread(img_path)
     img_tr = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img_tr = np.transpose(img_tr, (2, 0, 1)).astype(np.float32) / 255.0
-    print(img.shape)
+    # print(img.shape)
 
     t = torch.from_numpy(img_tr).to(device)
     t = t.unsqueeze(0)
@@ -49,7 +49,7 @@ def detection_fasterrcnn(img_path, finetune=False):
     with torch.no_grad():
         out = model(t)
 
-    print(out)
+    # print(out)
 
     boxes = out[0]["boxes"].data.cpu().numpy()
     scores = out[0]["scores"].data.cpu().numpy()
