@@ -7,9 +7,8 @@ import cv2
 import numpy as np
 
 
-def draw_texts(img, texts, offset_x=10, offset_y=0, font_scale=0.7, thickness=2):
+def draw_texts(img, texts, offset_x=10, offset_y=0, font_scale=0.7, thickness=2, color=(0, 0, 255)):
     h, w, c = img.shape
-    color = (0, 0, 255)  # black
 
     texts = [texts] if type(texts) == str else texts
 
@@ -18,7 +17,7 @@ def draw_texts(img, texts, offset_x=10, offset_y=0, font_scale=0.7, thickness=2)
                     font_scale, color, thickness, cv2.LINE_AA)
 
 
-def detection_fasterrcnn(img_path="./samples/00017.png", finetune=False):
+def detection_fasterrcnn(img_path, finetune=False):
     torch.cuda.empty_cache()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -60,14 +59,23 @@ def detection_fasterrcnn(img_path="./samples/00017.png", finetune=False):
                 6: 'car', 7: 'bike', 8: 'motor', 9: 'truck', 10: 'bus'}
 
     boxes = boxes[scores >= 0.5].astype(np.int32)
+    pnum = 0
     for i, box in enumerate(boxes):
-        cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 0, 0))
+        cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 0, 0), thickness=2)
         if labels[i] == 1:
             draw_texts(img, 'person '+str(round(scores[i], 3)), offset_x=box[0], offset_y=box[1])
+            pnum += 1
+    draw_texts(img, 'people: '+str(pnum), offset_x=10, offset_y=20, color=(0, 255, 0))
 
     cv2.imshow("result", img)
     cv2.waitKey(0)
 
 
 if __name__ == '__main__':
-    detection_fasterrcnn()
+    import pathlib
+    import random
+    base_path = pathlib.Path('./samples')
+    img_path_list = list(base_path.glob('*.jpg'))
+    idx = random.randint(0, len(img_path_list) - 1)
+    print(img_path_list[idx])
+    detection_fasterrcnn(img_path=str(img_path_list[idx]))
