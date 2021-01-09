@@ -1,5 +1,5 @@
 # FasterR-CNN
-The simple program of Faster R-CNN with pytorch and torchvision.\
+The simple program of Faster R-CNN with pytorch and torchvision.
 <center>
   <table>
     <tr>
