@@ -65,10 +65,12 @@ class FasterRCNNModule():
         boxes = boxes[scores >= 0.5].astype(np.int32)
         pnum = 0
         for i, box in enumerate(boxes):
-            cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 0, 0), thickness=2)
             if labels[i] == 1:
+                cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 0, 255), thickness=2)
                 draw_texts(img, 'person '+str(round(scores[i], 3)), offset_x=box[0], offset_y=box[1])
                 pnum += 1
+            else:
+                cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 0, 0), thickness=1)
         draw_texts(img, 'people: '+str(pnum), offset_x=10, offset_y=20, color=(0, 255, 0))
         draw_texts(img, 'fps: '+str(round(fps, 4)), offset_x=10, offset_y=50, color=(0, 255, 0))
 
