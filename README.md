@@ -5,7 +5,7 @@ The simple program of Faster R-CNN with pytorch and torchvision.\
 
 ## Installation
 Make the anaconda environment.\
-This code is available for CPU environment.\
+This code is available for CPU environment.
 ### 1. PyTorch and Torchvision installation
 PyTorch: https://pytorch.org/get-started/locally/
 ```
