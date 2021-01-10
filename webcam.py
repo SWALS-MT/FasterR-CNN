@@ -62,7 +62,7 @@ class FasterRCNNModule():
         category = {0: 'background', 1: 'person', 2: 'traffic light', 3: 'train', 4: 'traffic sign', 5: 'rider',
                     6: 'car', 7: 'bike', 8: 'motor', 9: 'truck', 10: 'bus'}
 
-        boxes = boxes[scores >= 0.5].astype(np.int32)
+        boxes = boxes[scores >= 0.5].astype(np.int32)  # Confidence threshold
         pnum = 0
         for i, box in enumerate(boxes):
             if labels[i] == 1:
