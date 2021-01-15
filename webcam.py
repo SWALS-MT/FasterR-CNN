@@ -109,7 +109,7 @@ class MaskRCNNModule():
             # get number of input features for the classifier
             in_features = self.model.roi_heads.box_predictor.cls_score.in_features
             # replace the pre-trained head with a new one
-            self.model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+            self.model.roi_heads.box_predictor = MaskRCNNPredictor(in_features, num_classes)
 
         self.model = self.model.to(self.device)
         self.model.eval()
